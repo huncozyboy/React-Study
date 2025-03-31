@@ -1,0 +1,25 @@
+{
+  "name": "react-study",
+  "version": "1.0.0",
+  "description": "모던 리액트 Deep Dive Study",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/huncozyboy/React-Study.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/huncozyboy/React-Study/issues"
+  },
+  "homepage": "https://github.com/huncozyboy/React-Study#readme",
+  "dependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-scripts": "^5.0.1"
+  }
+}
