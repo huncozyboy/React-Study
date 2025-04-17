@@ -1,11 +1,18 @@
 import React, { Component } from 'react';
+import TOC from "./components/TOC"
+import Subject from "./components/Subject"
+import Content from "./components/Content"
 import './App.css';
+
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <h1 className="title">두잇! 리액트 시작하기</h1>
+        <Subject title="WEB" sub="word wide web"></Subject>
+        <Subject title="React" sub="For UI"></Subject>
+        <TOC></TOC>
+        <Content title="HTML" sub="HTML is HyperText Markup Language."></Content>
       </div>
     );
   }
