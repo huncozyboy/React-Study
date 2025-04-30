@@ -2,23 +2,23 @@ import React, { Component } from 'react';
 
 class TOC extends Component {
   render() {
-    var lists = [];
-    var data = this.props.data;
-    var i =0;
-    while(i < data.length){
-        lists.push(
-        <li key={data[i].id}>
-        <a href={"/content/" + data[i].id}>{data[i].title}</a>
-        </li>
-        );
-        i = i + 1;
-    }
+    const lists = this.props.data.map(item => (
+      <li key={item.id}>
+        <a
+          href={`/content/${item.id}`}
+          onClick={(e) => {
+            e.preventDefault();
+            this.props.onChangePage(item.id); 
+          }}
+        >
+          {item.title}
+        </a>
+      </li>
+    ));
 
     return (
       <nav>
-            <ul>
-                {lists}
-            </ul>
+        <ul>{lists}</ul>
       </nav>
     );
   }

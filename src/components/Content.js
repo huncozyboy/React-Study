@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 
 class Content extends Component {
   render() {
-    return(
+    return (
       <article>
-            <h2>{this.props.title}</h2>
-            {this.props.sub}
+        <h2>{this.props.title}</h2>
+        <p>{this.props.desc}</p>
       </article>
     );
   }
