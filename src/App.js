@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import TOC from "./components/TOC";
 import Subject from "./components/Subject";
-import Content from "./components/Content";
+import Control from "./components/Control";
+import ReadContent from "./components/ReadContent";
+import CreateContent from "./components/CreateContent";
+import UpdateContent from "./components/UpdateContent";
 import './App.css';
 
 class App extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
+    this.max_content_id = 3;
     this.state = {
       mode: 'welcome',
       selected_content_id: 1,
@@ -20,55 +24,99 @@ class App extends Component {
     };
   }
 
-  handleSelectContent = (id) => {
-    this.setState({
-      mode: 'read',
-      selected_content_id: id
-    });
-  };
-
   render() {
-    const { mode, welcome, contents, selected_content_id } = this.state;
+    console.log('App render');
+    let _title, _desc, _article = null;
 
-    let _title, _desc;
-
-    if (mode === 'welcome') {
-      _title = welcome.title;
-      _desc = welcome.desc;
-    } else if (mode === 'read') {
-      const content = contents.find(c => c.id === selected_content_id);
-      _title = content.title;
-      _desc = content.desc;
+    if (this.state.mode === 'welcome') {
+      _title = this.state.welcome.title;
+      _desc = this.state.welcome.desc;
+      _article = <ReadContent title={_title} desc={_desc} />;
+    } else if (this.state.mode === 'read') {
+      const data = this.state.contents.find(c => c.id === this.state.selected_content_id);
+      _title = data.title;
+      _desc = data.desc;
+      _article = <ReadContent title={_title} desc={_desc} />;
+    } else if (this.state.mode === 'create') {
+      _article = (
+        <CreateContent
+          onSubmit={(title, desc) => {
+            this.max_content_id += 1;
+            const newContent = {
+              id: this.max_content_id,
+              title,
+              desc
+            };
+            this.setState({
+              contents: [...this.state.contents, newContent],
+              mode: 'read',
+              selected_content_id: this.max_content_id
+            });
+          }}
+        />
+      );
+    } else if (this.state.mode === 'update') {
+      const data = this.state.contents.find(c => c.id === this.state.selected_content_id);
+      _article = (
+        <UpdateContent
+          data={data}
+          onSubmit={(title, desc) => {
+            const newContents = this.state.contents.map(content =>
+              content.id === this.state.selected_content_id
+                ? { ...content, title, desc }
+                : content
+            );
+            this.setState({
+              contents: newContents,
+              mode: 'read'
+            });
+          }}
+        />
+      );
     }
 
     return (
       <div className="App">
-        <header>
-          <h1>
-            <a href="/" onClick={(e) => {
-              e.preventDefault();
-              this.setState({ mode: 'welcome' });
-            }}>
-              {this.state.subject.title}
-            </a>
-          </h1>
-          {this.state.subject.sub}
-        </header>
-
-        <TOC onChangePage={function(id) {
-          this.setState({
-            mode: 'read',
-            selected_content_id: Number(id)
-          });
-        }.bind(this)}
-        data={this.state.contents}
+        <Subject
+          title={this.state.subject.title}
+          sub={this.state.subject.sub}
+          onChangePage={() => {
+            this.setState({ mode: 'welcome' });
+          }}
         />
-        <ul>
-          <li><a href="/create">create</a></li>
-          <li><a href="/update">update</a></li>
-          <li><input type="button" value="delete" /></li>
-        </ul>
-        <Content title={_title} desc={_desc} />
+        <TOC
+          onChangePage={(id) => {
+            this.setState({
+              mode: 'read',
+              selected_content_id: Number(id)
+            });
+          }}
+          data={this.state.contents}
+        />
+        <Control
+          onChangeMode={(_mode) => {
+            if (_mode === 'delete') {
+              if (window.confirm()) {
+                const _contents = Array.from(this.state.contents);
+                let i = 0;
+                while (i < _contents.length) {
+                  if (_contents[i].id === this.state.selected_content_id) {
+                    _contents.splice(i, 1);
+                    break;
+                  }
+                  i++;
+                }
+                this.setState({
+                  mode: 'welcome',
+                  contents: _contents
+                });
+              }
+            } else {
+              this.setState({ mode: _mode });
+            }
+          }}
+        />
+        {_article}
       </div>
     );
   }
