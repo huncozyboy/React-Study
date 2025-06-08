@@ -12,8 +12,10 @@ const List = ({todos, onUpdate, onDelete }) => {
 
     const getFilteredTodos = () => {
         if (search === "") {
+
             return todos;
         }
+
         return todos.filter((todo) => 
             todo.content.toLowerCase().includes(search.toLowerCase())
         );
@@ -34,7 +36,6 @@ const List = ({todos, onUpdate, onDelete }) => {
   }
 
  const {totalCount, doneCount, notDoneCount}  = useMemo (()=> {
-
     const totalCount = todos.length;
     const doneCount = todos.filter(todo => todo.isDone).length;
     const notDoneCount = totalCount - doneCount;
@@ -44,7 +45,6 @@ const List = ({todos, onUpdate, onDelete }) => {
       doneCount,
       notDoneCount
     };
-    
   }, [todos])
 
 //   const {totalCount, doneCount, notDoneCount} = getAnalyzedData()
@@ -64,6 +64,7 @@ const List = ({todos, onUpdate, onDelete }) => {
         />
         <div className="todos_wrapper">
           {filteredTodos.map((todo) => {
+            
              return (
                 <TodoItem 
                     key={todo.id} 
