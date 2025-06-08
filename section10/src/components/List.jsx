@@ -34,6 +34,7 @@ const List = ({todos, onUpdate, onDelete }) => {
   }
 
  const {totalCount, doneCount, notDoneCount}  = useMemo (()=> {
+
     const totalCount = todos.length;
     const doneCount = todos.filter(todo => todo.isDone).length;
     const notDoneCount = totalCount - doneCount;
@@ -43,6 +44,7 @@ const List = ({todos, onUpdate, onDelete }) => {
       doneCount,
       notDoneCount
     };
+    
   }, [todos])
 
 //   const {totalCount, doneCount, notDoneCount} = getAnalyzedData()
