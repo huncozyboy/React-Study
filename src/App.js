@@ -47,6 +47,7 @@ class App extends Component {
               title,
               desc
             };
+            
             this.setState({
               contents: [...this.state.contents, newContent],
               mode: 'read',
@@ -66,6 +67,7 @@ class App extends Component {
                 ? { ...content, title, desc }
                 : content
             );
+
             this.setState({
               contents: newContents,
               mode: 'read'
