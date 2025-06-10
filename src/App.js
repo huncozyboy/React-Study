@@ -47,7 +47,7 @@ class App extends Component {
               title,
               desc
             };
-            
+
             this.setState({
               contents: [...this.state.contents, newContent],
               mode: 'read',
@@ -102,6 +102,7 @@ class App extends Component {
                 const _contents = Array.from(this.state.contents);
                 let i = 0;
                 while (i < _contents.length) {
+                  
                   if (_contents[i].id === this.state.selected_content_id) {
                     _contents.splice(i, 1);
                     break;
